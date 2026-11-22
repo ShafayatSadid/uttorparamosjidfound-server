@@ -4,7 +4,9 @@ import { env } from './config/env';
 import { connectDB } from './config/db';
 import fundTypeRoutes from './routes/fundType.routes';
 import personRoutes from './routes/person.routes';
-import contributionRoutes from './routes/contribution.routes'; // নতুন ইমপোর্ট
+import contributionRoutes from './routes/contribution.routes';
+import weeklyRoutes from './routes/weekly.routes';
+import miscDonationRoutes from './routes/miscDonation.routes'; 
 
 const app = express();
 
@@ -14,7 +16,9 @@ app.use(express.json());
 // Routes
 app.use('/api/fund-types', fundTypeRoutes);
 app.use('/api/persons', personRoutes);
-app.use('/api/contributions', contributionRoutes); // নতুন রাউট
+app.use('/api/contributions', contributionRoutes);
+app.use('/api/weekly', weeklyRoutes); 
+app.use('/api/misc-donations', miscDonationRoutes); 
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });

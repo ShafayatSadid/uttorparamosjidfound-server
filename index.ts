@@ -3,7 +3,8 @@ import cors from 'cors';
 import { env } from './config/env';
 import { connectDB } from './config/db';
 import fundTypeRoutes from './routes/fundType.routes';
-import personRoutes from './routes/person.routes'; // নতুন ইমপোর্ট
+import personRoutes from './routes/person.routes';
+import contributionRoutes from './routes/contribution.routes'; // নতুন ইমপোর্ট
 
 const app = express();
 
@@ -12,7 +13,8 @@ app.use(express.json());
 
 // Routes
 app.use('/api/fund-types', fundTypeRoutes);
-app.use('/api/persons', personRoutes); // নতুন রাউট
+app.use('/api/persons', personRoutes);
+app.use('/api/contributions', contributionRoutes); // নতুন রাউট
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });

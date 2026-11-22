@@ -6,7 +6,8 @@ import fundTypeRoutes from './routes/fundType.routes';
 import personRoutes from './routes/person.routes';
 import contributionRoutes from './routes/contribution.routes';
 import weeklyRoutes from './routes/weekly.routes';
-import miscDonationRoutes from './routes/miscDonation.routes'; 
+import miscDonationRoutes from './routes/miscDonation.routes';
+import reportRoutes from './routes/report.routes'; // নতুন
 
 const app = express();
 
@@ -17,8 +18,9 @@ app.use(express.json());
 app.use('/api/fund-types', fundTypeRoutes);
 app.use('/api/persons', personRoutes);
 app.use('/api/contributions', contributionRoutes);
-app.use('/api/weekly', weeklyRoutes); 
-app.use('/api/misc-donations', miscDonationRoutes); 
+app.use('/api/weekly', weeklyRoutes);
+app.use('/api/misc-donations', miscDonationRoutes);
+app.use('/api/reports', reportRoutes); // নতুন
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });

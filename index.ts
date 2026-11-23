@@ -7,7 +7,9 @@ import personRoutes from './routes/person.routes';
 import contributionRoutes from './routes/contribution.routes';
 import weeklyRoutes from './routes/weekly.routes';
 import miscDonationRoutes from './routes/miscDonation.routes';
-import reportRoutes from './routes/report.routes'; // নতুন
+import reportRoutes from './routes/report.routes';
+import dashboardRoutes from './routes/dashboard.routes';
+import memberRoutes from './routes/member.routes'; // নতুন
 
 const app = express();
 
@@ -20,7 +22,9 @@ app.use('/api/persons', personRoutes);
 app.use('/api/contributions', contributionRoutes);
 app.use('/api/weekly', weeklyRoutes);
 app.use('/api/misc-donations', miscDonationRoutes);
-app.use('/api/reports', reportRoutes); // নতুন
+app.use('/api/reports', reportRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/members', memberRoutes); // নতুন
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });

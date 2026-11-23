@@ -3,7 +3,6 @@ import { ObjectId } from 'mongodb';
 import { getDB } from '../config/db';
 import { Person, PersonFund } from '../types/person';
 
-// ১. সব ব্যক্তির লিস্ট (তাদের ফান্ড ডিটেইলসহ)
 export async function getPersons(req: Request, res: Response) {
   try {
     const db = getDB();
@@ -32,11 +31,9 @@ export async function getPersons(req: Request, res: Response) {
   }
 }
 
-// ২. নতুন ব্যক্তি যোগ করা (সাথে ডিফল্ট বা কাস্টম ফান্ড সেট করা)
 export async function createPerson(req: Request, res: Response) {
   try {
     const { name, phone, funds } = req.body;
-    // funds = [{ fundTypeId: "...", assignedAmount: 5000 }]
 
     if (!name || !phone) {
       res.status(400).json({ error: 'Name and phone are required' });
@@ -44,17 +41,13 @@ export async function createPerson(req: Request, res: Response) {
     }
 
     const db = getDB();
-    
-    // ১. Person তৈরি
     const newPerson: Person = { name, phone, createdAt: new Date() };
     const result = await db.collection<Person>('persons').insertOne(newPerson);
     const personId = result.insertedId;
 
-    // ২. যদি ফান্ড ডিটেইলস পাঠানো হয়, তবে personFunds এ সেভ করা
     if (funds && Array.isArray(funds) && funds.length > 0) {
       const personFunds: PersonFund[] = funds.map((f: any) => ({
         personId: personId,
-        // এখানে as string কাস্ট করা হলো যাতে টাইপস্ক্রিপ্ট এরর না দেয়
         fundTypeId: new ObjectId(f.fundTypeId as string), 
         assignedAmount: Number(f.assignedAmount) || 0,
         createdAt: new Date()
@@ -69,7 +62,6 @@ export async function createPerson(req: Request, res: Response) {
   }
 }
 
-// ৩. নির্দিষ্ট ব্যক্তির ডিটেইলস দেখা (ফান্ডসহ)
 export async function getPersonById(req: Request, res: Response) {
   try {
     const id = req.params.id as string; 
@@ -104,5 +96,65 @@ export async function getPersonById(req: Request, res: Response) {
     res.json({ ...person, funds });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch person' });
+  }
+}
+
+// নতুন: Person (নাম/ফোন) আপডেট
+export async function updatePerson(req: Request, res: Response) {
+  try {
+    const id = req.params.id as string;
+    const { name, phone } = req.body;
+
+    if (!ObjectId.isValid(id)) {
+      res.status(400).json({ error: 'Invalid ID' });
+      return;
+    }
+
+    const db = getDB();
+    const updateData: any = {};
+    if (name !== undefined) updateData.name = name;
+    if (phone !== undefined) updateData.phone = phone;
+
+    const result = await db.collection<Person>('persons').updateOne(
+      { _id: new ObjectId(id) },
+      { $set: updateData }
+    );
+
+    if (result.matchedCount === 0) {
+      res.status(404).json({ error: 'Person not found' });
+      return;
+    }
+
+    res.json({ message: 'Person updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update person' });
+  }
+}
+
+// নতুন: Person Fund (নির্ধারিত চাঁদা) আপডেট
+export async function updatePersonFund(req: Request, res: Response) {
+  try {
+    const fundId = req.params.fundId as string;
+    const { assignedAmount } = req.body;
+
+    if (!ObjectId.isValid(fundId)) {
+      res.status(400).json({ error: 'Invalid Fund ID' });
+      return;
+    }
+
+    const db = getDB();
+    const result = await db.collection<PersonFund>('personFunds').updateOne(
+      { _id: new ObjectId(fundId) },
+      { $set: { assignedAmount: Number(assignedAmount) } }
+    );
+
+    if (result.matchedCount === 0) {
+      res.status(404).json({ error: 'Fund record not found' });
+      return;
+    }
+
+    res.json({ message: 'Assigned amount updated successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update assigned amount' });
   }
 }

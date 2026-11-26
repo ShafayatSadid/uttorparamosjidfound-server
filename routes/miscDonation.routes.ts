@@ -5,7 +5,7 @@ import { verifyAdmin } from '../middleware/auth';
 const router = Router();
 
 router.post('/', verifyAdmin, createMiscDonation);
-router.get('/', verifyAdmin, getMiscDonations);
+router.get('/', getMiscDonations);
 router.delete('/:id', verifyAdmin, deleteMiscDonation);
 
 export default router;

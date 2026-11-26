@@ -1,15 +1,14 @@
 import express from 'express';
 import cors from 'cors';
-import { env } from './config/env';
-import { connectDB } from './config/db';
-import fundTypeRoutes from './routes/fundType.routes';
-import personRoutes from './routes/person.routes';
-import contributionRoutes from './routes/contribution.routes';
-import weeklyRoutes from './routes/weekly.routes';
-import miscDonationRoutes from './routes/miscDonation.routes';
-import reportRoutes from './routes/report.routes';
-import dashboardRoutes from './routes/dashboard.routes';
-import memberRoutes from './routes/member.routes'; // নতুন
+import { env } from './config/env.js';
+import fundTypeRoutes from './routes/fundType.routes.js';
+import personRoutes from './routes/person.routes.js';
+import contributionRoutes from './routes/contribution.routes.js';
+import weeklyRoutes from './routes/weekly.routes.js';
+import miscDonationRoutes from './routes/miscDonation.routes.js';
+import reportRoutes from './routes/report.routes.js';
+import dashboardRoutes from './routes/dashboard.routes.js';
+import memberRoutes from './routes/member.routes.js';
 
 const app = express();
 
@@ -24,7 +23,7 @@ app.use('/api/weekly', weeklyRoutes);
 app.use('/api/misc-donations', miscDonationRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/members', memberRoutes); // নতুন
+app.use('/api/members', memberRoutes);
 
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
@@ -36,18 +35,5 @@ app.use((err: any, _req: express.Request, res: express.Response, _next: express.
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-async function start() {
-  try {
-    await connectDB();
-    app.listen(env.PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${env.PORT}`);
-    });
-  } catch (err) {
-    console.error('❌ Server start failed:', err);
-    process.exit(1);
-  }
-}
-
-start();
-
+// লোকালহোস্টের listen() সম্পূর্ণ বাদ দেওয়া হলো
 export default app;

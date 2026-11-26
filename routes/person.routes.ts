@@ -4,7 +4,7 @@ import { verifyAdmin } from '../middleware/auth';
 
 const router = Router();
 
-router.get('/', verifyAdmin, getPersons);
+router.get('/', getPersons);
 router.post('/', verifyAdmin, createPerson);
 router.get('/:id', verifyAdmin, getPersonById);
 router.put('/:id', verifyAdmin, updatePerson); // নতুন রাউট: Person এডিট

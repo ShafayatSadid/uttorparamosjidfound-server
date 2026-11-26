@@ -22,6 +22,26 @@ export async function getPersons(req: Request, res: Response) {
           foreignField: '_id',
           as: 'fundTypeDetails'
         }
+      },
+      // নতুন: Contributions থেকে টাকা সামারি করা
+      {
+        $lookup: {
+          from: 'contributions',
+          localField: '_id',
+          foreignField: 'personId',
+          as: 'contributions'
+        }
+      },
+      {
+        $addFields: {
+          totalPaid: { $sum: '$contributions.amount' },
+          totalAssigned: { $sum: '$funds.assignedAmount' }
+        }
+      },
+      {
+        $addFields: {
+          totalDue: { $subtract: ['$totalAssigned', '$totalPaid'] }
+        }
       }
     ]).toArray();
 

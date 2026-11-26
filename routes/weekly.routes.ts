@@ -5,7 +5,7 @@ import { verifyAdmin } from '../middleware/auth';
 const router = Router();
 
 router.post('/', verifyAdmin, createWeekly);
-router.get('/', verifyAdmin, getWeeklies);
+router.get('/', getWeeklies);
 router.delete('/:id', verifyAdmin, deleteWeekly);
 
 export default router;

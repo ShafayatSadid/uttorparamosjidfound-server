@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getDashboardSummary } from '../controllers/dashboard.controller';
-import { verifyAdmin } from '../middleware/auth';
+import { getDashboardSummary } from '../controllers/dashboard.controller.js';
+import { verifyAdmin } from '../middleware/auth.js';
 
 const router = Router();
 

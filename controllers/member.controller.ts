@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDB } from '../config/db';
-import { Member } from '../types/member';
+import { getDB } from '../config/db.js';
+import { Member } from '../types/member.js';
 
 // ১. সব মেম্বার আনা (ফিল্টার সহ)
 export async function getMembers(req: Request, res: Response) {

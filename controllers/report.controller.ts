@@ -2,11 +2,11 @@ import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import PDFDocument from 'pdfkit';
 import path from 'path';
-import { getDB } from '../config/db';
-import { Person, PersonFund } from '../types/person';
-import { Contribution } from '../types/contribution';
-import { WeeklyCollection } from '../types/weekly';
-import { MiscDonation } from '../types/miscDonation';
+import { getDB } from '../config/db.js';
+import { Person, PersonFund } from '../types/person.js';
+import { Contribution } from '../types/contribution.js';
+import { WeeklyCollection } from '../types/weekly.js';
+import { MiscDonation } from '../types/miscDonation.js';
 
 // বাংলা ফন্টের পাথ
 const fontPath = path.join(process.cwd(), 'fonts', 'HindSiliguri-Regular.ttf');

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDB } from '../config/db';
-import { Person, PersonFund } from '../types/person';
+import { getDB } from '../config/db.js';
+import { Person, PersonFund } from '../types/person.js';
 
 export async function getPersons(req: Request, res: Response) {
   try {

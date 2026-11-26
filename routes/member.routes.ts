@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getMembers, createMember, updateMember, deleteMember } from '../controllers/member.controller';
-import { verifyAdmin } from '../middleware/auth';
+import { getMembers, createMember, updateMember, deleteMember } from '../controllers/member.controller.js';
+import { verifyAdmin } from '../middleware/auth.js';
 
 const router = Router();
 

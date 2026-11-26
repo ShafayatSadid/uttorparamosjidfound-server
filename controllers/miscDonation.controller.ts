@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDB } from '../config/db';
-import { MiscDonation } from '../types/miscDonation';
+import { getDB } from '../config/db.js';
+import { MiscDonation } from '../types/miscDonation.js';
 
 export async function createMiscDonation(req: Request, res: Response) {
   try {

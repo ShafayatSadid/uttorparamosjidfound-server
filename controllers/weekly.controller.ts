@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDB } from '../config/db';
-import { WeeklyCollection } from '../types/weekly';
+import { getDB } from '../config/db.js';
+import { WeeklyCollection } from '../types/weekly.js';
 
 export async function createWeekly(req: Request, res: Response) {
   try {

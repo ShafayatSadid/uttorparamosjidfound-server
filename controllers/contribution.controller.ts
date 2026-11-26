@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
 import { getDB } from '../config/db';
-import { Contribution } from '../types/contribution';
+import { Contribution } from '../types/contribution.js';
 
 // ১. নতুন পেমেন্ট (আদায়) যোগ করা
 export async function createContribution(req: Request, res: Response) {

@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createWeekly, getWeeklies, deleteWeekly } from '../controllers/weekly.controller';
-import { verifyAdmin } from '../middleware/auth';
+import { createWeekly, getWeeklies, deleteWeekly } from '../controllers/weekly.controller.js';
+import { verifyAdmin } from '../middleware/auth.js';
 
 const router = Router();
 

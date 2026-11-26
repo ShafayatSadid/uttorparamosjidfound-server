@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getFundTypes, createFundType, updateFundType } from '../controllers/fundType.controller';
-import { verifyAdmin } from '../middleware/auth';
+import { getFundTypes, createFundType, updateFundType } from '../controllers/fundType.controller.js';
+import { verifyAdmin } from '../middleware/auth.js';
 
 const router = Router();
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ObjectId } from 'mongodb';
-import { getDB } from '../config/db';
-import { FundType } from '../types/fundType';
+import { getDB } from '../config/db.js';
+import { FundType } from '../types/fundType.js';
 
 export async function getFundTypes(req: Request, res: Response) {
   try {

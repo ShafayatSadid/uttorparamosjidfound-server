@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createContribution, getContributionsByPerson, deleteContribution } from '../controllers/contribution.controller';
-import { verifyAdmin } from '../middleware/auth';
+import { createContribution, getContributionsByPerson, deleteContribution } from '../controllers/contribution.controller.js';
+import { verifyAdmin } from '../middleware/auth.js';
 
 const router = Router();
 

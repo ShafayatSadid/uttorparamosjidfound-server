@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { getPersons, createPerson, getPersonById, updatePerson, updatePersonFund } from '../controllers/person.controller';
-import { verifyAdmin } from '../middleware/auth';
+import { getPersons, createPerson, getPersonById, updatePerson, updatePersonFund } from '../controllers/person.controller.js';
+import { verifyAdmin } from '../middleware/auth.js';
 
 const router = Router();
 

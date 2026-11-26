@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { createMiscDonation, getMiscDonations, deleteMiscDonation } from '../controllers/miscDonation.controller';
-import { verifyAdmin } from '../middleware/auth';
+import { createMiscDonation, getMiscDonations, deleteMiscDonation } from '../controllers/miscDonation.controller.js';
+import { verifyAdmin } from '../middleware/auth.js';
 
 const router = Router();
 

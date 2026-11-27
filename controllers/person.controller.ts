@@ -178,3 +178,33 @@ export async function updatePersonFund(req: Request, res: Response) {
     res.status(500).json({ error: 'Failed to update assigned amount' });
   }
 }
+
+// নতুন: Person এবং তার সব ডেটা ডিলিট করা
+export async function deletePerson(req: Request, res: Response) {
+  try {
+    const id = req.params.id as string;
+    if (!ObjectId.isValid(id)) {
+      res.status(400).json({ error: 'Invalid ID' });
+      return;
+    }
+
+    const db = getDB();
+    const personId = new ObjectId(id);
+
+    // ১. ব্যক্তিকে ডিলিট করা
+    const result = await db.collection('persons').deleteOne({ _id: personId });
+
+    if (result.deletedCount === 0) {
+      res.status(404).json({ error: 'Person not found' });
+      return;
+    }
+
+    // ২. তার ফান্ড এবং জমার রেকর্ডও ডিলিট করা (যাতে ডাটাবেসে ফাঁকা ডেটা না থাকে)
+    await db.collection('personFunds').deleteMany({ personId });
+    await db.collection('contributions').deleteMany({ personId });
+
+    res.json({ message: 'Person deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete person' });
+  }
+}

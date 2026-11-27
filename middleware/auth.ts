@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { createLocalJWKSet, jwtVerify } from 'jose';
-import { env } from '../config/env';
+import { env } from '../config/env.js';
 
 let jwks: any = null;
 

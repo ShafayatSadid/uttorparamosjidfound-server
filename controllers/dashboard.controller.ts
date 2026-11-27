@@ -35,10 +35,16 @@ export async function getDashboardSummary(req: Request, res: Response) {
     ]).toArray();
     const totalMisc = miscResult.length > 0 ? miscResult[0].total : 0;
 
-    // ৭. সর্বমোট আদায় (ব্যক্তি + সাপ্তাহিক + বিবিধ)
-    const grandTotalCollection = totalContributions + totalWeekly + totalMisc;
+    // নতুন: মোট খরচ বের করা
+    const expenseResult = await db.collection('expenses').aggregate([
+      { $group: { _id: null, total: { $sum: '$amount' } } }
+    ]).toArray();
+    const totalExpenses = expenseResult.length > 0 ? expenseResult[0].total : 0;
 
-    // রেসপন্স
+    // ব্যালেন্স ক্যালকুলেশন
+    const grandTotalCollection = totalContributions + totalWeekly + totalMisc;
+    const currentBalance = grandTotalCollection - totalExpenses;
+
     res.json({
       totalPersons,
       totalAssigned,
@@ -46,10 +52,11 @@ export async function getDashboardSummary(req: Request, res: Response) {
       totalDue,
       totalWeekly,
       totalMisc,
-      grandTotalCollection
+      grandTotalCollection,
+      totalExpenses, // নতুন
+      currentBalance // নতুন
     });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: 'Failed to fetch dashboard summary' });
   }
 }
